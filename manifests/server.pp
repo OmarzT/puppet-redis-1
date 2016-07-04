@@ -162,8 +162,8 @@ define redis::server (
     /(Gentoo)/                                                 => 'redis/etc/init.d/gentoo_redis-server.erb',
     default                                                    => undef,
   }
-  $redis_2_6_or_greater = versioncmp($::redis::install::redis_version,'2.6') >= 0
-  $redis_with_cluster_support = versioncmp($::redis::install::redis_version,'3.0') >= 0
+  $redis_2_6_or_greater = versioncmp("${::redis::install::redis_version}",'2.6') >= 0
+  $redis_with_cluster_support = versioncmp("${::redis::install::redis_version}",'3.0') >= 0
 
   # redis conf file
   $conf_file_name = "redis_${redis_name}.conf"
