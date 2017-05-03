@@ -23,11 +23,15 @@
 # [*download_base*]
 #   Url where to find the source tar.gz. Default value is 'http://download.redis.io/releases'
 #
+# [*redis_package_src*]
+#   URL or path to find redis package file (rpm or deb)
+#
 class redis::install (
   $redis_version     = $::redis::params::redis_version,
   $redis_build_dir   = $::redis::params::redis_build_dir,
   $redis_install_dir = $::redis::params::redis_install_dir,
   $redis_package     = $::redis::params::redis_install_package,
+  $redis_package_src = $::redis::params::redis_package_src,
   $download_tool     = $::redis::params::download_tool,
   $redis_user        = $::redis::params::redis_user,
   $redis_group       = $::redis::params::redis_group,
@@ -35,16 +39,22 @@ class redis::install (
   if ($redis_package == true) {
     case $::operatingsystem {
       'Debian', 'Ubuntu' : {
-        package { 'redis-server': ensure => $redis_version, }
-
+        if $redis_package_src {
+          package { 'redis': ensure => installed, provider => 'dpkg', source => $redis_package_src, }
+        } else {
+          package { 'redis-server': ensure => $redis_version, }
+        }
         service { 'redis-server':
           ensure    => stopped,
           subscribe => Package['redis-server']
         }
       }
       'Fedora', 'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Amazon', 'Scientific', 'SLES' : {
-        package { 'redis': ensure => $redis_version, }
-
+        if $redis_package_src {
+          package { 'redis': ensure => installed, provider => 'rpm', source => $redis_package_src, }
+        } else {
+          package { 'redis': ensure => $redis_version, }
+        }
         # The SLES DatabaseServer repository installs a conflicting logrotation configuration
         if $::operatingsystem == 'SLES' {
           file { '/etc/logrotate.d/redis':
