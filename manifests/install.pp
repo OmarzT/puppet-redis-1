@@ -31,7 +31,7 @@ class redis::install (
   $download_tool     = $::redis::params::download_tool,
   $redis_user        = $::redis::params::redis_user,
   $redis_group       = $::redis::params::redis_group,
-  $redis_package     = $::redis::params::redis_package,
+  $redis_rpmname     = $::redis::params::redis_rpmname,
   $download_base     = $::redis::params::download_base,) inherits redis {
   if ($redis_package == true) {
     case $::operatingsystem {
@@ -44,7 +44,7 @@ class redis::install (
         }
       }
       'Fedora', 'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Amazon', 'Scientific', 'SLES' : {
-        package { '$redis_package': ensure => $redis_version, }
+        package { '$redis_rpmname': ensure => $redis_version, }
 
         # The SLES DatabaseServer repository installs a conflicting logrotation configuration
         if $::operatingsystem == 'SLES' {
