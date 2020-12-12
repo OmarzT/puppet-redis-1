@@ -52,9 +52,9 @@ class redis::install (
       }
       'Fedora', 'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Amazon', 'Scientific', 'SLES' : {
         if $redis_package_src {
-          package { '$redis_rpmname': ensure => installed, provider => 'rpm', source => $redis_package_src, }
+          package { $redis_rpmname : ensure => installed, provider => 'rpm', source => $redis_package_src, }
         } else {
-          package { '$redis_rpmname': ensure => $redis_version, }
+          package { $redis_rpmname : ensure => $redis_version, }
         }
         # The SLES DatabaseServer repository installs a conflicting logrotation configuration
         if $::operatingsystem == 'SLES' {
