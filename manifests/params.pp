@@ -6,6 +6,7 @@ class redis::params {
   $redis_install_dir     = '/usr/bin'
   $redis_install_package = false
   $redis_package_src     = undef
+  $redis_rpmname         = redis
   $download_tool         = 'curl -s -L'
   $redis_user            = undef
   $redis_group           = undef
