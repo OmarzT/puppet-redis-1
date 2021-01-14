@@ -131,7 +131,7 @@ define redis::server (
   $appendfsync_on_rewrite  = false,
   $aof_rewrite_percentage  = 100,
   $aof_rewrite_minsize     = 64,
-  $redis_appendfsync       = 'everysec',
+  $redis_appendfsync       = 'no',
   $redis_enabled_append_file = false,
   $redis_append_file       = undef,
   $redis_append_enable     = false,
