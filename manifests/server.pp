@@ -124,6 +124,7 @@ define redis::server (
   $redis_run_dir           = '/var/run/redis',
   $redis_loglevel          = 'notice',
   $redis_appedfsync        = 'everysec',
+  $redis_tcp_backlog       = '511',
   $running                 = true,
   $enabled                 = true,
   $requirepass             = undef,
