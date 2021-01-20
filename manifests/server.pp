@@ -143,6 +143,7 @@ define redis::server (
   $repl_timeout            = 60,
   $repl_ping_slave_period  = 10,
   $save                    = [],
+  $latency_threshold       = undef,
   $hash_max_ziplist_entries = 512,
   $hash_max_ziplist_value  = 64,
   $manage_logrotate        = true,
